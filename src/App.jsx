@@ -1,13 +1,14 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login/Login";
+import NovaSenha from "./components/NovaSenha/NovaSenha";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <p>
-        Text
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/nova-senha" element={<NovaSenha />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App
