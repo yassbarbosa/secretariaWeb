@@ -1,0 +1,17 @@
+.fundo {
+  width: 100%;
+  height: 100vh;
+  background: #eef3fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalLogin {
+  background: #ffffff;
+  width: 420px;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 40, 120, 0.15);
+}
