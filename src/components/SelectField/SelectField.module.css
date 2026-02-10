@@ -1,0 +1,50 @@
+.campo {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    color: #1f3c88;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+.select {
+    width: 100%;
+    padding: 14px;
+    padding-right: 44px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #cdd9f1;
+    outline: none;
+    font-size: 15px;
+    background-color: #fff;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select:focus {
+    border-color: #3f6fe0;
+    box-shadow: 0 0 0 3px rgba(63, 111, 224, 0.15);
+}
+
+.campo::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 40px;
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f3c88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    transition: transform 0.25s ease;
+}
+
+.campo:has(.select:focus)::after {
+    transform: rotate(180deg);
+}

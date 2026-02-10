@@ -1,6 +1,8 @@
 import styles from "./Login.module.css";
 import logo from "../../assets/logo-aprendai.png";
 import AuthLayout from "../Layout/AuthLayout";
+import InputField from "../InputField/InputField";
+import Button from "../Button/Button";
 
 export default function Login() {
   return (
@@ -13,23 +15,15 @@ export default function Login() {
       <p className={styles.subtitulo}>Bem-vindo ao Aprendaí!</p>
 
       <form className={styles.formularioLogin}>
-        <label className={styles.campo}>
-          Matrícula
-          <input type="text" />
-        </label>
+        <InputField label="Matrícula" />
 
-        <label className={styles.campo}>
-          Senha
-          <input type="password" />
-        </label>
+        <InputField label="Senha" type="password" />
 
         <a href="/nova-senha" className={styles.esqueciSenha}>
           Esqueceu sua senha?
         </a>
 
-        <button type="submit" className={styles.botaoEntrar}>
-          Entrar
-        </button>
+        <Button type="submit">Entrar</Button>
       </form>
     </AuthLayout>
   );
