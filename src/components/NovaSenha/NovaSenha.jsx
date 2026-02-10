@@ -2,6 +2,7 @@ import styles from "./NovaSenha.module.css";
 import logo from "../../assets/logo-aprendai.png";
 import AuthLayout from "../Layout/AuthLayout";
 import InputField from "../InputField/InputField";
+import Button from "../Button/Button";
 
 export default function NovaSenha() {
   return (
@@ -30,9 +31,7 @@ export default function NovaSenha() {
             Voltar para o login
         </a>
 
-        <button type="submit" className={styles.botaoEntrar}>
-          Salvar senha
-        </button>
+        <Button type="submit">Salvar senha</Button>
       </form>
 
     </AuthLayout>

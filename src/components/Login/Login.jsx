@@ -2,6 +2,7 @@ import styles from "./Login.module.css";
 import logo from "../../assets/logo-aprendai.png";
 import AuthLayout from "../Layout/AuthLayout";
 import InputField from "../InputField/InputField";
+import Button from "../Button/Button";
 
 export default function Login() {
   return (
@@ -22,9 +23,7 @@ export default function Login() {
           Esqueceu sua senha?
         </a>
 
-        <button type="submit" className={styles.botaoEntrar}>
-          Entrar
-        </button>
+        <Button type="submit">Entrar</Button>
       </form>
     </AuthLayout>
   );
