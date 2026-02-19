@@ -1,6 +1,8 @@
 import styles from "./NovaSenha.module.css";
 import logo from "../../assets/logo-aprendai.png";
 import AuthLayout from "../Layout/AuthLayout";
+import InputField from "../InputField/InputField";
+import Button from "../Button/Button";
 
 export default function NovaSenha() {
   return (
@@ -15,24 +17,23 @@ export default function NovaSenha() {
       </p>
 
       <form className={styles.formularioLogin}>
-        <label className={styles.campo}>
-          Nova senha
-          <input type="password" />
-        </label>
+        <InputField
+          label="Nova senha"
+          type="password"
+        />
 
-        <label className={styles.campo}>
-          Confirmar senha
-          <input type="password" />
-        </label>
+        <InputField
+          label="Confirmar senha"
+          type="password"
+        />
 
-        <button type="submit" className={styles.botaoEntrar}>
-          Salvar senha
-        </button>
+         <a href="/" className={styles.esqueciSenha}>
+            Voltar para o login
+        </a>
+
+        <Button type="submit">Salvar senha</Button>
       </form>
 
-      <a href="/" className={styles.esqueciSenha}>
-        Voltar para o login
-      </a>
     </AuthLayout>
   );
 }
