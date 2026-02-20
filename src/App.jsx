@@ -5,6 +5,7 @@ import AreaProfessor from "./pages/AreaProfessor/AreaProfessor";
 import Tabela from "./components/Tabela/Tabela";
 import Button from "./components/Button/Button";
 import BarraPesquisa from "./components/BarraPesquisa/BarraPesquisa"; 
+import AreaAluno from "./pages/AreaAluno/AreaAluno";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/tabela" element={<Tabela />} />
         <Route path="/button" element={<Button />} />
         <Route path="/barra-pesquisa" element={<BarraPesquisa />} />
+        <Route path="/area-aluno" element={<AreaAluno />} />
       </Routes>
     </BrowserRouter>
   );
