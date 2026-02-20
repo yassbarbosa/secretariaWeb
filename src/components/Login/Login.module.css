@@ -86,3 +86,10 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(31, 60, 136, 0.3);
 }
+
+.botaoMedio {
+  width: 60%;
+  margin: 0 auto;
+  display: block;
+}
+

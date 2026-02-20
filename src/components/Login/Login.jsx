@@ -3,6 +3,7 @@ import logo from "../../assets/logo-aprendai.png";
 import AuthLayout from "../Layout/AuthLayout";
 import InputField from "../InputField/InputField";
 import Button from "../Button/Button";
+import BarraPesquisa from "../BarraPesquisa/BarraPesquisa";
 
 export default function Login() {
   return (
@@ -22,8 +23,9 @@ export default function Login() {
         <a href="/nova-senha" className={styles.esqueciSenha}>
           Esqueceu sua senha?
         </a>
-
-        <Button type="submit">Entrar</Button>
+        <Button type="submit" className={styles.botaoMedio}>
+  Entrar
+</Button>
       </form>
     </AuthLayout>
   );

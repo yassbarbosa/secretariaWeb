@@ -1,0 +1,65 @@
+.tabela {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #2d4f8f;
+    font-family: Arial, sans-serif;
+}
+
+/* Cabeçalho */
+.tabela thead {
+    background-color: #2d4f8f;
+    color: white;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Corpo com scroll (máx. 7 linhas) */
+.tabela tbody {
+    display: block;
+    max-height: 336px;
+    overflow-y: auto;
+}
+
+/* Linhas */
+.tabela tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Células */
+.tabela th,
+.tabela td {
+    padding: 14px;
+    text-align: center;
+    border-right: 2px solid #9aa7c1;
+    box-sizing: border-box;
+}
+
+.tabela th:last-child,
+.tabela td:last-child {
+    border-right: none;
+}
+
+/* Zebra */
+.tabela tbody tr:nth-child(odd) {
+    background-color: #e6f2ff;
+}
+
+.tabela tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .tabela th,
+    .tabela td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
