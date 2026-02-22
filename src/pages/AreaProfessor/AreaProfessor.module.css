@@ -70,20 +70,6 @@ h5 {
   padding: 40px;
 }
 
-/* ===== OBSERVAÇÃO ===== */
-.backgroundObservacao {
-  background-color: #DCE8FF;
-  border-radius: 22px;
-  padding: 30px;
-  margin-right: 30px;
-}
-
-.tituloObservacao {
-  background-color: white;
-  border-radius: 22px;
-  padding: 100px;
-}
-
 /* ===== TABELA ===== */
 .tabela {
   width: 100%;
