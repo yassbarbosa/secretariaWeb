@@ -55,6 +55,10 @@
     background-color: #ffffff;
 }
 
+.media {
+  font-weight: bold;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
     .tabela th,

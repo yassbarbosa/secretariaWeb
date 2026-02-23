@@ -1,9 +1,18 @@
 import { useState } from "react";
 import style from "./Observacoes.module.css";
 import iconeLixeira from "../../assets/icone_lixeira.png";
-import Button from "../Button/Button";
+import ObservationModal from "../ObservationModal/ObservationModal";
 
-export default function Observacoes() {
+export default function Observacoes({ role }) {
+  const [modalAberto, setModalAberto] = useState(false);
+
+  function abrirModal() {
+    setModalAberto(true);
+  }
+
+  function fecharModal() {
+    setModalAberto(false);
+  }
 
   const [observacoes, setObservacoes] = useState([
     {
@@ -38,12 +47,14 @@ export default function Observacoes() {
         {observacoes.map((obs) => (
           <div key={obs.id} className={style.cardObservacao}>
             
-            <button
-              className={style.iconeLixeira}
-              onClick={() => removerObservacao(obs.id)}
-            >
-              <img src={iconeLixeira} alt="Excluir" />
-            </button>
+            {role === "professor" && (
+              <button
+                className={style.iconeLixeira}
+                onClick={() => removerObservacao(obs.id)}
+              >
+                <img src={iconeLixeira} alt="Excluir" />
+              </button>
+            )}
   
             <h4>{obs.aluno}</h4>
             <p>{obs.texto}</p>
@@ -53,12 +64,28 @@ export default function Observacoes() {
       </div>
   
       {/* BOTÃO FLUTUANTE */}
-      <button
-        className={style.botaoFlutuante}
-        onClick={handleAdicionar}
-      >
-        +
-      </button>
+      {role === "professor" && (
+        <button
+          className={style.botaoFlutuante}
+          onClick={abrirModal}
+        >
+          +
+        </button>
+      )}
+
+      {modalAberto && (
+        <div
+          className={style.overlay}
+          onClick={fecharModal}
+        >
+          <div
+            className={style.modal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ObservationModal onSubmit={fecharModal} />
+          </div>
+        </div>
+      )}
   
     </div>
   );
