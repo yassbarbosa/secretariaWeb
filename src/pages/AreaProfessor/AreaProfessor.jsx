@@ -2,6 +2,7 @@ import Tabela from "../../components/Tabela/Tabela";
 import style from "./AreaProfessor.module.css";
 import Button from "../../components/Button/Button";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
+import Observacoes from "../../components/Observacoes/Observacoes";
 
 export default function AreaProfessor() {
   return (
@@ -30,11 +31,7 @@ export default function AreaProfessor() {
           </div>
 
         </div>
-      <div className={style.backgroundObservacao}>
-        <div className={style.tituloObservacao}>
-            <h1>Observações</h1>
-        </div>
-      </div>
+      <Observacoes />
     </div>
   </div>
   
