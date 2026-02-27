@@ -6,6 +6,7 @@ import Tabela from "./components/Tabela/Tabela";
 import Button from "./components/Button/Button";
 import BarraPesquisa from "./components/BarraPesquisa/BarraPesquisa"; 
 import AreaAluno from "./pages/AreaAluno/AreaAluno";
+import AreaAdm from "./pages/AreaAdm/AreaAdm"
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/button" element={<Button />} />
         <Route path="/barra-pesquisa" element={<BarraPesquisa />} />
         <Route path="/area-aluno" element={<AreaAluno />} />
+        <Route path="/area-adm" element={<AreaAdm />} />
       </Routes>
     </BrowserRouter>
   );

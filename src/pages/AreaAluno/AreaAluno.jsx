@@ -1,11 +1,14 @@
 import Tabela from "../../components/Tabela/Tabela";
 import style from "./AreaAluno.module.css";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
+import Observacoes from "../../components/Observacoes/Observacoes";
+import NavBar from "../../components/NavBar/Navbar";
 
 export default function AreaAluno() {
   return (
     <div className={style.principal}>
-      <div className={style.nav}>
+      <div>
+        <NavBar/>
         <div className={style.foto}>
         <img src="caminho/para/foto_do_aluno.jpg" alt="" />
         </div>
@@ -26,11 +29,7 @@ export default function AreaAluno() {
           </div>
 
         </div>
-      <div className={style.backgroundObservacao}>
-        <div className={style.tituloObservacao}>
-            <h1>Observações</h1>
-        </div>
-      </div>
+      <Observacoes/>
     </div>
   </div>
   
