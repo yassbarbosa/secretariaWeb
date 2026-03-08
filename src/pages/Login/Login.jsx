@@ -9,6 +9,7 @@ import { login } from "../../services/usuarioService";
 
 export default function Login() {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -16,29 +17,36 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await login(email,senha);
+
+      const response = await login(email, senha);
+
       localStorage.setItem("usuario", JSON.stringify(response));
+
+      localStorage.setItem("tipoUsuario", response.tipoUsuario);
 
       const tipo = response.tipoUsuario;
 
-      if (tipo == "ALUNO") {
+      if (tipo === "ALUNO") {
         navigate("/area-aluno");
       }
 
-      if (tipo == "PROFESSOR") {
+      if (tipo === "PROFESSOR") {
         navigate("/area-professor");
       }
 
-      if (tipo == "ADMIN") {
+      if (tipo === "ADMIN") {
         navigate("/area-adm");
       }
+
     } catch (error) {
-      console.error("Erro no login",error);
+      console.error("Erro no login", error);
+      alert("Email ou senha inválidos");
     }
-  }
+  };
 
   return (
     <AuthLayout>
+
       <div className={styles.iconeUsuario}>
         <img src={logo} alt="Aprendaí" />
       </div>
@@ -47,6 +55,7 @@ export default function Login() {
       <p className={styles.subtitulo}>Bem-vindo ao Aprendaí!</p>
 
       <form className={styles.formularioLogin} onSubmit={handleLogin}>
+
         <InputField
           label="E-mail"
           value={email}
@@ -63,10 +72,13 @@ export default function Login() {
         <a href="/nova-senha" className={styles.esqueciSenha}>
           Esqueceu sua senha?
         </a>
+
         <Button type="submit" className={styles.botaoMedio}>
-  Entrar
-</Button>
+          Entrar
+        </Button>
+
       </form>
+
     </AuthLayout>
   );
 }

@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import Tabela from "../../components/Tabela/Tabela";
 import Button from "../../components/Button/Button";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import style from "./AreaAdm.module.css";
 
 export default function AreaTurma() {
+
+  const [dados, setDados] = useState([]);
 
   const colunas = [
     { label: "ID", key: "id" },
@@ -12,12 +15,31 @@ export default function AreaTurma() {
     { label: "Ações", key: "acoes" },
   ];
 
-  const dados = [
-    { id: "1", turma: "3º A", ano: "2026", acoes: "Editar" },
-  ];
+  useEffect(() => {
+    buscarTurmas();
+  }, []);
+
+  async function buscarTurmas() {
+
+    const response = await fetch(
+      "https://aprendeaiapi-pw5p.onrender.com/api/admin/findTurma"
+    );
+
+    const data = await response.json();
+
+    const formatado = data.map((turma, index) => ({
+      id: index + 1,
+      turma: turma.disciplina.nomeDisciplina,
+      ano: turma.anoEscolar,
+      acoes: "Editar"
+    }));
+
+    setDados(formatado);
+  }
 
   return (
     <div className={style.backgroundTabela}>
+
       <div className={style.topoTabela}>
         <BarraPesquisa placeholder="Pesquisar turma..." />
         <Button>Adicionar Turma</Button>
@@ -26,6 +48,7 @@ export default function AreaTurma() {
       <h1>Turmas</h1>
 
       <Tabela colunas={colunas} dados={dados} />
+
     </div>
   );
 }

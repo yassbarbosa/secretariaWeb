@@ -2,25 +2,46 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import NovaSenha from "./pages/NovaSenha/NovaSenha";
 import AreaProfessor from "./pages/AreaProfessor/AreaProfessor";
-import Tabela from "./components/Tabela/Tabela";
-import Button from "./components/Button/Button";
-import BarraPesquisa from "./components/BarraPesquisa/BarraPesquisa"; 
 import AreaAluno from "./pages/AreaAluno/AreaAluno";
-import AreaAdm from "./pages/AreaAdm/AreaAdm"
+import AreaAdm from "./pages/AreaAdm/AreaAdm";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<Login />} />
         <Route path="/nova-senha" element={<NovaSenha />} />
-        <Route path="/area-professor" element={<AreaProfessor />} />
 
-        <Route path="/tabela" element={<Tabela />} />
-        <Route path="/button" element={<Button />} />
-        <Route path="/barra-pesquisa" element={<BarraPesquisa />} />
-        <Route path="/area-aluno" element={<AreaAluno />} />
-        <Route path="/area-adm" element={<AreaAdm />} />
+        <Route
+          path="/area-professor"
+          element={
+            <ProtectedRoute role="PROFESSOR">
+              <AreaProfessor />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/area-adm"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AreaAdm />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/area-aluno"
+          element={
+            <ProtectedRoute role="ALUNO">
+              <AreaAluno />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );
