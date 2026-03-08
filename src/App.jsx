@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Login/Login";
-import NovaSenha from "./components/NovaSenha/NovaSenha";
+import Login from "./pages/Login/Login";
+import NovaSenha from "./pages/NovaSenha/NovaSenha";
 import AreaProfessor from "./pages/AreaProfessor/AreaProfessor";
 import Tabela from "./components/Tabela/Tabela";
 import Button from "./components/Button/Button";

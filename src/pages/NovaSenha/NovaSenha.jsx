@@ -1,8 +1,8 @@
 import styles from "./NovaSenha.module.css";
 import logo from "../../assets/logo-aprendai.png";
-import AuthLayout from "../Layout/AuthLayout";
-import InputField from "../InputField/InputField";
-import Button from "../Button/Button";
+import AuthLayout from "../../components/Layout/AuthLayout";
+import InputField from "../../components/InputField/InputField";
+import Button from "../../components/Button/Button";
 
 export default function NovaSenha() {
   return (
