@@ -1,31 +1,35 @@
 import style from "../Tabela/Tabela.module.css";
 
-export default function Tabela() {
+export default function Tabela({ colunas, dados }) {
   return (
     <table className={style.tabela}>
       <thead>
         <tr>
-          <th>Matéria</th>
-          <th>Nota</th>
-          <th>Status</th>
+          {colunas.map((coluna, index) => (
+            <th key={index}>{coluna.label}</th>
+          ))}
         </tr>
       </thead>
+
       <tbody>
-        <tr>
-          <td>Matemática</td>
-          <td>8.5</td>
-          <td>Aprovado</td>
-        </tr>
-        <tr>
-          <td>Português</td>
-          <td>7.0</td>
-          <td>Aprovado</td>
-        </tr>
-        <tr>
-          <td>História</td>
-          <td>6.0</td>
-          <td>Reprovado</td>
-        </tr>
+        {dados.map((linha, i) => (
+          <tr key={i}>
+            {colunas.map((coluna, j) => (
+              <td
+                key={j}
+                className={
+                  coluna.label === "Média"
+                    ? style.media
+                    : ""
+                }
+              >
+                {coluna.label === "Média"
+                  ? linha[coluna.key].toFixed(1)
+                  : linha[coluna.key]}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );
