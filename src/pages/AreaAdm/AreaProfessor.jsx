@@ -4,6 +4,8 @@ import Button from "../../components/Button/Button";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import style from "./AreaAdm.module.css";
 
+import { getProfessores } from "../../services/adminService";
+
 export default function AreaProfessor() {
 
   const [dados, setDados] = useState([]);
@@ -23,22 +25,25 @@ export default function AreaProfessor() {
 
   async function buscarProfessores() {
 
-    const response = await fetch(
-      "https://aprendeaiapi-pw5p.onrender.com/api/admin/getProfessor"
-    );
+    try {
 
-    const data = await response.json();
+      const data = await getProfessores();
 
-    const formatado = data.map((prof) => ({
-      registro: prof.matricula,
-      nome: prof.nomeCompleto,
-      disciplina: prof.nomeDisciplina,
-      email: prof.email,
-      ano_escolar: prof.anoEscolar,
-      acoes: "Editar"
-    }));
+      const formatado = data.map((prof) => ({
+        registro: prof.matricula,
+        nome: prof.nomeCompleto,
+        disciplina: prof.nomeDisciplina,
+        email: prof.email,
+        ano_escolar: prof.anoEscolar,
+        acoes: "Editar"
+      }));
 
-    setDados(formatado);
+      setDados(formatado);
+
+    } catch (error) {
+      console.error("Erro ao buscar professores:", error);
+    }
+
   }
 
   return (

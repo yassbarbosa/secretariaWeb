@@ -7,12 +7,15 @@ import Observacoes from "../../components/Observacoes/Observacoes";
 import GradeModal from "../../components/ModalCadastroNotas/ModalCadastroNotas";
 import Navbar from "../../components/Navbar/Navbar";
 
+import { getObservacao, getAlunosByProfessor } from "../../services/professorService";
+
 export default function AreaProfessor() {
 
   const [modalAberto, setModalAberto] = useState(false);
   const [dadosProfessor, setDadosProfessor] = useState([]);
+  const [observacoes, setObservacoes] = useState([]);
 
-  const idProfessor = localStorage.getItem("idUsuario") || 1;
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
 
   const colunasProfessor = [
     { label: "Aluno", key: "aluno" },
@@ -25,21 +28,18 @@ export default function AreaProfessor() {
 
   useEffect(() => {
     buscarAlunos();
+    buscarObservacoes();
   }, []);
 
   const buscarAlunos = async () => {
 
     try {
 
-      const response = await fetch(
-        `https://aprendeaiapi-pw5p.onrender.com/api/professor/getAlunosByProfessor?professorId=${idProfessor}`
-      );
-
-      const data = await response.json();
+      const data = await getAlunosByProfessor(usuarioLogado.id);
 
       const formatado = data.map((aluno) => ({
         aluno: aluno.nomeCompleto,
-        matricula: aluno.matricula, 
+        matricula: aluno.matricula,
         turma: aluno.idTurma,
         n1: aluno.n1,
         n2: aluno.n2,
@@ -54,6 +54,20 @@ export default function AreaProfessor() {
 
   };
 
+  const buscarObservacoes = async () => {
+
+    try {
+
+      const data = await getObservacao(usuarioLogado.id);
+
+      setObservacoes(data);
+
+    } catch (error) {
+      console.error("Erro ao buscar observações:", error);
+    }
+
+  };
+
   function abrirModal() {
     setModalAberto(true);
   }
@@ -64,6 +78,7 @@ export default function AreaProfessor() {
 
   return (
     <div className={style.principal}>
+
       <Navbar role="professor" />
 
       <h2>Perfil</h2>
@@ -74,6 +89,7 @@ export default function AreaProfessor() {
         <div className={style.backgroundTabela}>
 
           <div className={style.topoTabela}>
+
             <BarraPesquisa placeholder="Pesquisar..." />
 
             <Button
@@ -82,9 +98,11 @@ export default function AreaProfessor() {
             >
               Adicionar Nota
             </Button>
+
           </div>
 
           <div className={style.titulo}>
+
             <h1>Notas</h1>
 
             <Tabela
@@ -96,12 +114,18 @@ export default function AreaProfessor() {
 
         </div>
 
-        <Observacoes role="professor" />
+        <Observacoes
+          role="professor"
+          dados={observacoes}
+        />
 
       </div>
 
       {modalAberto && (
-        <div className={style.overlay} onClick={fecharModal}>
+        <div
+          className={style.overlay}
+          onClick={fecharModal}
+        >
           <div
             className={style.modal}
             onClick={(e) => e.stopPropagation()}

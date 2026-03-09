@@ -4,6 +4,8 @@ import Button from "../../components/Button/Button";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import style from "./AreaAdm.module.css";
 
+import { getTurmas } from "../../services/adminService";
+
 export default function AreaTurma() {
 
   const [dados, setDados] = useState([]);
@@ -21,20 +23,23 @@ export default function AreaTurma() {
 
   async function buscarTurmas() {
 
-    const response = await fetch(
-      "https://aprendeaiapi-pw5p.onrender.com/api/admin/findTurma"
-    );
+    try {
 
-    const data = await response.json();
+      const data = await getTurmas();
 
-    const formatado = data.map((turma, index) => ({
-      id: index + 1,
-      turma: turma.disciplina.nomeDisciplina,
-      ano: turma.anoEscolar,
-      acoes: "Editar"
-    }));
+      const formatado = data.map((turma, index) => ({
+        id: index + 1,
+        turma: turma.turma,
+        ano: turma.anoEscolar,
+        acoes: "Editar"
+      }));
 
-    setDados(formatado);
+      setDados(formatado);
+
+    } catch (error) {
+      console.error("Erro ao buscar turmas:", error);
+    }
+
   }
 
   return (

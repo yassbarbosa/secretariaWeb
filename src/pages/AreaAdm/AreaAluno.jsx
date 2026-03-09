@@ -4,6 +4,8 @@ import Button from "../../components/Button/Button";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import style from "./AreaAdm.module.css";
 
+import { getAlunos } from "../../services/adminService";
+
 export default function AreaAluno() {
 
   const [dadosAluno, setDadosAluno] = useState([]);
@@ -23,22 +25,25 @@ export default function AreaAluno() {
 
   async function buscarAlunos() {
 
-    const response = await fetch(
-      "https://aprendeaiapi-pw5p.onrender.com/api/admin/getAlunos"
-    );
+    try {
 
-    const data = await response.json();
+      const data = await getAlunos();
 
-    const formatado = data.map((aluno) => ({
-      matricula: aluno.matricula,
-      nome: aluno.nomeCompleto,
-      cpf: aluno.cpf,
-      email: aluno.email,
-      serie: aluno.anoEscolar,
-      acoes: "Editar"
-    }));
+      const formatado = data.map((aluno) => ({
+        matricula: aluno.matricula,
+        nome: aluno.nomeCompleto,
+        cpf: aluno.cpf,
+        email: aluno.email,
+        serie: aluno.anoEscolar,
+        acoes: "Editar"
+      }));
 
-    setDadosAluno(formatado);
+      setDadosAluno(formatado);
+
+    } catch (error) {
+      console.error("Erro ao buscar alunos:", error);
+    }
+
   }
 
   return (
