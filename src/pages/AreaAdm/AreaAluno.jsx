@@ -5,10 +5,13 @@ import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import style from "./AreaAdm.module.css";
 
 import { getAlunos } from "../../services/adminService";
+import AddUserModal from "../../components/AddUserModal/AddUserModal";
 
 export default function AreaAluno() {
-
   const [dadosAluno, setDadosAluno] = useState([]);
+  const [dadosFiltrados, setDadosFiltrados] = useState([]);
+  const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [modalAberto, setModalAberto] = useState(false);
 
   const colunasAluno = [
     { label: "Matrícula", key: "matricula" },
@@ -23,12 +26,29 @@ export default function AreaAluno() {
     buscarAlunos();
   }, []);
 
+  useEffect(() => {
+    if (!termoPesquisa.trim()) {
+      setDadosFiltrados(dadosAluno);
+      return;
+    }
+
+    const termo = termoPesquisa.toLowerCase().trim();
+    const filtrados = dadosAluno.filter(aluno => {
+      return (
+        aluno.nome?.toLowerCase().includes(termo) ||
+        aluno.matricula?.toLowerCase().includes(termo) ||
+        aluno.cpf?.includes(termo) ||
+        aluno.email?.toLowerCase().includes(termo) ||
+        aluno.serie?.toLowerCase().includes(termo)
+      );
+    });
+    
+    setDadosFiltrados(filtrados);
+  }, [termoPesquisa, dadosAluno]);
+
   async function buscarAlunos() {
-
     try {
-
       const data = await getAlunos();
-
       const formatado = data.map((aluno) => ({
         matricula: aluno.matricula,
         nome: aluno.nomeCompleto,
@@ -37,27 +57,44 @@ export default function AreaAluno() {
         serie: aluno.anoEscolar,
         acoes: "Editar"
       }));
-
       setDadosAluno(formatado);
-
+      setDadosFiltrados(formatado);
     } catch (error) {
       console.error("Erro ao buscar alunos:", error);
     }
+  }
 
+  function handleSearch(valor) {
+    setTermoPesquisa(valor);
+  }
+
+  function abrirModal() {
+    setModalAberto(true);
+  }
+
+  function fecharModal() {
+    setModalAberto(false);
   }
 
   return (
     <div className={style.backgroundTabela}>
-
       <div className={style.topoTabela}>
-        <BarraPesquisa placeholder="Pesquisar..." />
-        <Button>Adicionar Aluno</Button>
+        <BarraPesquisa 
+          placeholder="Pesquisar por nome, matrícula, CPF ou email..."
+          onSearch={handleSearch}
+        />
+        <Button onClick={abrirModal}>Adicionar Aluno</Button>
       </div>
 
       <h1>Alunos</h1>
+      <Tabela colunas={colunasAluno} dados={dadosFiltrados} />
 
-      <Tabela colunas={colunasAluno} dados={dadosAluno} />
-
+      {modalAberto && (
+        <AddUserModal
+          onClose={fecharModal}
+          onSuccess={buscarAlunos}
+        />
+      )}
     </div>
   );
 }

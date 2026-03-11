@@ -2,7 +2,6 @@ import { useState } from "react";
 import Tabela from "../../components/Tabela/Tabela";
 import style from "./AreaAdm.module.css";
 import Button from "../../components/Button/Button";
-import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import NavBar from "../../components/NavBar/Navbar";
 import AreaAluno from "./AreaAluno";
 import AreaProfessor from "./AreaProfessor";

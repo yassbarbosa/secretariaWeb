@@ -1,0 +1,80 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  min-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 26px;
+  color: #1f3c88;
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 14px;
+  color: #1f3c88;
+}
+
+.input {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #cdd9f1;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.input:focus {
+  border-color: #7b8fd1;
+  box-shadow: 0 0 0 2px rgba(123, 143, 209, 0.15);
+}
+
+.select {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #cdd9f1;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: 0.2s ease;
+  background-color: white;
+}
+
+.select:focus {
+  border-color: #7b8fd1;
+  box-shadow: 0 0 0 2px rgba(123, 143, 209, 0.15);
+}
+
+.botoesContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
