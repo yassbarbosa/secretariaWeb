@@ -3,7 +3,8 @@ import style from "./Observacoes.module.css";
 import iconeLixeira from "../../assets/icone_lixeira.png";
 import ObservationModal from "../ObservationModal/ObservationModal";
 
-export default function Observacoes({ role }) {
+export default function Observacoes({ role, dados }) {
+
   const [modalAberto, setModalAberto] = useState(false);
 
   function abrirModal() {
@@ -14,28 +15,8 @@ export default function Observacoes({ role }) {
     setModalAberto(false);
   }
 
-  const [observacoes, setObservacoes] = useState([
-    {
-      id: 1,
-      aluno: "João Silva",
-      texto: "Aluno apresentou melhora significativa na participação.",
-      data: "22/02/2026"
-    },
-    {
-      id: 2,
-      aluno: "Maria Souza",
-      texto: "Precisa melhorar foco em sala.",
-      data: "21/02/2026"
-    }
-  ]);
-
   const removerObservacao = (id) => {
-    setObservacoes((prev) => prev.filter((obs) => obs.id !== id));
-  };
-
-  const handleAdicionar = () => {
-    // aqui depois você conecta com seu popup
-    console.log("Abrir popup");
+    console.log("remover observação", id);
   };
 
   return (
@@ -44,7 +25,7 @@ export default function Observacoes({ role }) {
       <h1>Observações</h1>
   
       <div className={style.listaObservacoes}>
-        {observacoes.map((obs) => (
+        {dados?.map((obs) => (
           <div key={obs.id} className={style.cardObservacao}>
             
             {role === "professor" && (
@@ -59,11 +40,11 @@ export default function Observacoes({ role }) {
             <h4>{obs.aluno}</h4>
             <p>{obs.texto}</p>
             <span>{obs.data}</span>
+
           </div>
         ))}
       </div>
   
-      {/* BOTÃO FLUTUANTE */}
       {role === "professor" && (
         <button
           className={style.botaoFlutuante}

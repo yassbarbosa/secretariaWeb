@@ -15,9 +15,9 @@ export const addObservacao = async (dados) => {
   return response.data;
 };
 
-export const getObservacao = async (idAluno) => {
+export const getObservacao = async (professorId) => {
   const response = await api.get("/api/professor/getObservacao", {
-    params: { idAluno }
+    params: { professorId }
   });
 
   return response.data;
@@ -25,7 +25,7 @@ export const getObservacao = async (idAluno) => {
 
 export const getAlunosByProfessor = async (idProfessor) => {
   const response = await api.get("/api/professor/getAlunosByProfessor", {
-    params: { idProfessor }
+    params: { professorId: idProfessor }
   });
 
   return response.data;

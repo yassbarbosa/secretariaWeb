@@ -1,5 +1,25 @@
 import api from "./api";
 
+export const getAlunos = async () => {
+  const response = await api.get("/api/admin/getAlunos");
+  return response.data;
+};
+
+export const getProfessores = async () => {
+  const response = await api.get("/api/admin/getProfessor");
+  return response.data;
+};
+
+export const getDisciplinas = async () => {
+  const response = await api.get("/api/admin/getDisciplina");
+  return response.data;
+};
+
+export const getTurmas = async () => {
+  const response = await api.get("/api/admin/findTurmas");
+  return response.data;
+};
+
 export const addUsuario = async (dados) => {
   const response = await api.post("/api/admin/addUsuario", dados);
   return response.data;
@@ -10,25 +30,10 @@ export const addTurma = async (dados) => {
   return response.data;
 };
 
-export const addDisciplina = async (dados) => {
-  const response = await api.post("/api/admin/addDisciplina", dados);
-  return response.data;
-};
-
-export const findTurma = async () => {
-  const response = await api.get("/api/admin/findTurma");
-  return response.data;
-};
-
-export const findTurmaPalavra = async (palavra) => {
-  const response = await api.get("/api/admin/findTurmaPalavra", {
-    params: { palavra }
+export const addDisciplina = async (disciplina) => {
+  const response = await api.post("/api/admin/addDisciplina", null, {
+    params: { disciplina }
   });
 
-  return response.data;
-};
-
-export const findTipoUsuario = async () => {
-  const response = await api.get("/api/admin/findTipoUsuario");
   return response.data;
 };

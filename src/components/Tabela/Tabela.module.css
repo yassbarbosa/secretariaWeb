@@ -23,6 +23,12 @@
     display: block;
     max-height: 336px;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.tabela tbody::-webkit-scrollbar {
+    display: none;
 }
 
 /* Linhas */
@@ -57,6 +63,13 @@
 
 .media {
   font-weight: bold;
+}
+
+.semDados {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: black;
 }
 
 /* Mobile */

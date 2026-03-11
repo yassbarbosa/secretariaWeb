@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tabela from "../../components/Tabela/Tabela";
 import style from "./AreaProfessor.module.css";
 import Button from "../../components/Button/Button";
@@ -7,23 +7,66 @@ import Observacoes from "../../components/Observacoes/Observacoes";
 import GradeModal from "../../components/ModalCadastroNotas/ModalCadastroNotas";
 import Navbar from "../../components/Navbar/Navbar";
 
+import { getObservacao, getAlunosByProfessor } from "../../services/professorService";
+
 export default function AreaProfessor() {
+
   const [modalAberto, setModalAberto] = useState(false);
+  const [dadosProfessor, setDadosProfessor] = useState([]);
+  const [observacoes, setObservacoes] = useState([]);
+
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
 
   const colunasProfessor = [
     { label: "Aluno", key: "aluno" },
-    { label: "Série", key: "serie" },
+    { label: "Matrícula", key: "matricula" },
     { label: "Turma", key: "turma" },
     { label: "N1", key: "n1" },
     { label: "N2", key: "n2" },
     { label: "Média", key: "media" }
   ];
 
-  const dadosProfessor = [
-    { aluno: "João", serie: "1°", turma: "G", n1: 8, n2: 7, media: 7.5 },
-    { aluno: "Maria", serie: "2°", turma: "H", n1: 9, n2: 10, media: 9.5 },
-    { aluno: "Carlos", serie: "3°", turma: "F", n1: 5, n2: 6, media: 5.5 }
-  ];
+  useEffect(() => {
+    buscarAlunos();
+    buscarObservacoes();
+  }, []);
+
+  const buscarAlunos = async () => {
+
+    try {
+
+      const data = await getAlunosByProfessor(usuarioLogado.id);
+
+      const formatado = data.map((aluno) => ({
+        aluno: aluno.nomeCompleto,
+        matricula: aluno.matricula,
+        turma: aluno.idTurma,
+        n1: aluno.n1,
+        n2: aluno.n2,
+        media: aluno.media
+      }));
+
+      setDadosProfessor(formatado);
+
+    } catch (error) {
+      console.error("Erro ao buscar alunos:", error);
+    }
+
+  };
+
+  const buscarObservacoes = async () => {
+
+    try {
+
+      const data = await getObservacao(usuarioLogado.id);
+
+      setObservacoes(data);
+
+    } catch (error) {
+      console.error("Erro ao buscar observações:", error);
+    }
+
+  };
 
   function abrirModal() {
     setModalAberto(true);
@@ -35,42 +78,63 @@ export default function AreaProfessor() {
 
   return (
     <div className={style.principal}>
+
       <Navbar role="professor" />
+
       <h2>Perfil</h2>
       <h5>Professor</h5>
+
       <div className={style.container}>
+
         <div className={style.backgroundTabela}>
 
           <div className={style.topoTabela}>
+
             <BarraPesquisa placeholder="Pesquisar..." />
+
             <Button
               className={style.botaoAdicionar}
               onClick={abrirModal}
             >
               Adicionar Nota
             </Button>
+
           </div>
 
           <div className={style.titulo}>
+
             <h1>Notas</h1>
-            <Tabela colunas={colunasProfessor} dados={dadosProfessor} />
+
+            <Tabela
+              colunas={colunasProfessor}
+              dados={dadosProfessor}
+            />
+
           </div>
 
         </div>
-      <Observacoes role="professor" />
-    </div>
 
-    {modalAberto && (
-      <div className={style.overlay} onClick={fecharModal}>
-        <div
-          className={style.modal}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <GradeModal onSubmit={fecharModal} />
-        </div>
+        <Observacoes
+          role="professor"
+          dados={observacoes}
+        />
+
       </div>
-    )}
-  </div>
-  
+
+      {modalAberto && (
+        <div
+          className={style.overlay}
+          onClick={fecharModal}
+        >
+          <div
+            className={style.modal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <GradeModal onSubmit={fecharModal} />
+          </div>
+        </div>
+      )}
+
+    </div>
   );
 }
