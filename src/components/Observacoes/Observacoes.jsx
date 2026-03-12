@@ -27,7 +27,7 @@ export default function Observacoes({ role, dados }) {
       <div className={style.listaObservacoes}>
         {dados?.map((obs) => (
           <div key={obs.id} className={style.cardObservacao}>
-            
+
             {role === "professor" && (
               <button
                 className={style.iconeLixeira}
@@ -36,11 +36,12 @@ export default function Observacoes({ role, dados }) {
                 <img src={iconeLixeira} alt="Excluir" />
               </button>
             )}
-  
-            <h4>{obs.aluno}</h4>
-            <p>{obs.texto}</p>
-            <span>{obs.data}</span>
 
+            <h4>{obs.nomeAluno}</h4>
+            <p>{obs.observacao}</p>
+            <span>
+              {new Date(obs.dataRegistro).toLocaleDateString("pt-BR")}
+            </span>
           </div>
         ))}
       </div>
