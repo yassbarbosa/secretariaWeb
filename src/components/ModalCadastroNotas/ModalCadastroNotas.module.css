@@ -54,3 +54,13 @@
   background-color: #e6e6e6;
   color: #9aa4b2;
 }
+
+.erro {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}

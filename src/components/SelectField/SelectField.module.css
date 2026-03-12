@@ -1,6 +1,7 @@
 .container {
   position: relative;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .label {
@@ -22,18 +23,32 @@
   align-items: center;
   justify-content: space-between;
   font-size: 15px;
-  color: #1f3c88;
   cursor: pointer;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.field:hover {
+.field:hover:not(:disabled) {
   border-color: #b7c8f3;
+  background-color: #fafcff;
 }
 
 .field.open {
-  border-color: #3f6fe0;
-  box-shadow: 0 0 0 3px rgba(63, 111, 224, 0.15);
+  border-color: #2d4f8f;
+  box-shadow: 0 0 0 3px rgba(45, 79, 143, 0.1);
+}
+
+.field.hasValue {
+  color: #1f3c88;
+  font-weight: 500;
+}
+
+.placeholderText {
+  color: #9aa4b2;
+}
+
+.valueText {
+  color: #1f3c88;
 }
 
 .arrow {
@@ -45,8 +60,9 @@
   transition: transform 0.25s ease;
 }
 
-.field.open .arrow {
+.arrowOpen {
   transform: rotate(-135deg);
+  border-color: #2d4f8f;
 }
 
 .options {
@@ -54,25 +70,56 @@
   top: calc(100% + 6px);
   left: 0;
   width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
   background: #ffffff;
   border-radius: 12px;
   border: 1px solid #cdd9f1;
   box-shadow: 0 12px 30px rgba(31, 60, 136, 0.15);
-  padding: 6px 0;
-  z-index: 10;
+  padding: 8px 0;
+  z-index: 1000;
   animation: fadeIn 0.15s ease;
 }
 
-.options li {
+.option {
   padding: 12px 16px;
   font-size: 14px;
   color: #1f3c88;
   cursor: pointer;
   transition: background 0.15s ease;
+  list-style: none;
 }
 
-.options li:hover {
+.option:hover {
   background-color: #f3f6fd;
+}
+
+.selectedOption {
+  background-color: #e6f2ff;
+  color: #2d4f8f;
+  font-weight: 500;
+  position: relative;
+}
+
+.selectedOption::before {
+  content: "✓";
+  position: absolute;
+  right: 16px;
+  color: #2d4f8f;
+  font-weight: bold;
+}
+
+.noOptions {
+  padding: 16px;
+  text-align: center;
+  color: #9aa4b2;
+  font-style: italic;
+  list-style: none;
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -84,4 +131,23 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Scrollbar personalizada para as opções */
+.options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.options::-webkit-scrollbar-thumb {
+  background: #cdd9f1;
+  border-radius: 10px;
+}
+
+.options::-webkit-scrollbar-thumb:hover {
+  background: #b7c8f3;
 }

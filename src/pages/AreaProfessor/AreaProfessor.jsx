@@ -130,7 +130,10 @@ export default function AreaProfessor() {
             className={style.modal}
             onClick={(e) => e.stopPropagation()}
           >
-            <GradeModal onSubmit={fecharModal} />
+            <GradeModal 
+              onSubmit={fecharModal} 
+              professorId={usuarioLogado.id}
+            />
           </div>
         </div>
       )}

@@ -11,7 +11,6 @@ export default function BarraPesquisa({
   function handleChange(e) {
     setValue(e.target.value);
 
-    // Dispara busca automática enquanto digita (opcional)
     if (onSearch) {
       onSearch(e.target.value);
     }

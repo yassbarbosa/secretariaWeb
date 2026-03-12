@@ -7,6 +7,7 @@
     overflow: hidden;
     border: 2px solid #2d4f8f;
     font-family: Arial, sans-serif;
+    table-layout: fixed;
 }
 
 /* Cabeçalho */
@@ -45,6 +46,9 @@
     text-align: center;
     border-right: 2px solid #9aa7c1;
     box-sizing: border-box;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .tabela th:last-child,

@@ -38,3 +38,14 @@ export const getAlunoByTurma = async (idTurma) => {
 
   return response.data;
 };
+
+export const getSeries = async () => {
+  const response = await api.get("/api/admin/findTurmas");
+  const series = [...new Set(response.data.map(turma => turma.anoEscolar))];
+  return series;
+};
+
+export const getTurmasBySerie = async (serie) => {
+  const response = await api.get("/api/admin/findTurmas");
+  return response.data.filter(turma => turma.anoEscolar === serie);
+};
