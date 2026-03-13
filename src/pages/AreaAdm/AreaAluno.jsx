@@ -33,17 +33,16 @@ export default function AreaAluno() {
     }
 
     const termo = termoPesquisa.toLowerCase().trim();
-    const filtrados = dadosAluno.filter(aluno => {
-      return (
-        aluno.nome?.toLowerCase().includes(termo) ||
-        aluno.matricula?.toLowerCase().includes(termo) ||
-        aluno.cpf?.includes(termo) ||
-        aluno.email?.toLowerCase().includes(termo) ||
-        aluno.serie?.toLowerCase().includes(termo)
-      );
-    });
-    
+    const filtrados = dadosAluno.filter((aluno) =>
+      String(aluno.nome).toLowerCase().includes(termo) ||
+      String(aluno.matricula).toLowerCase().includes(termo) ||
+      String(aluno.cpf).includes(termo) ||
+      String(aluno.email).toLowerCase().includes(termo) ||
+      String(aluno.serie).toLowerCase().includes(termo)
+    );
+
     setDadosFiltrados(filtrados);
+
   }, [termoPesquisa, dadosAluno]);
 
   async function buscarAlunos() {
