@@ -13,6 +13,7 @@ export default function ObservationModal({ idProfessor, onSubmit, reloadObservac
     buscarAlunos();
   }, []);
 
+  
   const buscarAlunos = async () => {
     try {
 
