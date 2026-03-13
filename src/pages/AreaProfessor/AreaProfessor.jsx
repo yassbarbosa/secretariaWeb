@@ -117,6 +117,8 @@ export default function AreaProfessor() {
         <Observacoes
           role="professor"
           dados={observacoes}
+          idProfessor={usuarioLogado.id}
+          reloadObservacoes={buscarObservacoes}
         />
 
       </div>

@@ -3,8 +3,7 @@ import style from "./Observacoes.module.css";
 import iconeLixeira from "../../assets/icone_lixeira.png";
 import ObservationModal from "../ObservationModal/ObservationModal";
 
-export default function Observacoes({ role, dados }) {
-
+export default function Observacoes({ role, dados, idProfessor, reloadObservacoes}) {
   const [modalAberto, setModalAberto] = useState(false);
 
   function abrirModal() {
@@ -17,6 +16,7 @@ export default function Observacoes({ role, dados }) {
 
   const removerObservacao = (id) => {
     console.log("remover observação", id);
+    
   };
 
   return (
@@ -64,7 +64,11 @@ export default function Observacoes({ role, dados }) {
             className={style.modal}
             onClick={(e) => e.stopPropagation()}
           >
-            <ObservationModal onSubmit={fecharModal} />
+          <ObservationModal
+            idProfessor={idProfessor}
+            onSubmit={fecharModal}
+            reloadObservacoes={reloadObservacoes}
+          />          
           </div>
         </div>
       )}

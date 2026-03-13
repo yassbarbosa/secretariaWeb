@@ -33,3 +33,24 @@
     border-color: #7b8fd1;
     box-shadow: 0 0 0 2px rgba(123, 143, 209, 0.15);
 }
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.select {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #cdd9f1;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+    background: white;
+}
+
+.select:focus {
+    border-color: #7b8fd1;
+    box-shadow: 0 0 0 2px rgba(123, 143, 209, 0.15);
+}
