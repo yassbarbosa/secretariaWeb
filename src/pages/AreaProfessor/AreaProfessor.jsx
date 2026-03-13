@@ -10,7 +10,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import { getObservacao, getAlunosByProfessor } from "../../services/professorService";
 
 export default function AreaProfessor() {
-
+  const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [dadosFiltrados, setDadosFiltrados] = useState([]);
   const [modalAberto, setModalAberto] = useState(false);
   const [dadosProfessor, setDadosProfessor] = useState([]);
   const [observacoes, setObservacoes] = useState([]);
@@ -31,6 +32,27 @@ export default function AreaProfessor() {
     buscarObservacoes();
   }, []);
 
+  useEffect(() => {
+    if (!termoPesquisa.trim()) {
+      setDadosFiltrados(dadosProfessor);
+      return;
+    }
+
+    const termo = termoPesquisa.toLowerCase();
+    const filtrados = dadosProfessor.filter((aluno) =>
+      String(aluno.aluno).toLowerCase().includes(termo) ||
+      String(aluno.matricula).toLowerCase().includes(termo) ||
+      String(aluno.turma).toLowerCase().includes(termo)
+    );
+
+    setDadosFiltrados(filtrados);
+
+  }, [termoPesquisa, dadosProfessor]);
+
+  function handleSearch(valor) {
+    setTermoPesquisa(valor);
+  }
+
   const buscarAlunos = async () => {
 
     try {
@@ -47,6 +69,7 @@ export default function AreaProfessor() {
       }));
 
       setDadosProfessor(formatado);
+      setDadosFiltrados(formatado);
 
     } catch (error) {
       console.error("Erro ao buscar alunos:", error);
@@ -90,7 +113,10 @@ export default function AreaProfessor() {
 
           <div className={style.topoTabela}>
 
-            <BarraPesquisa placeholder="Pesquisar..." />
+            <BarraPesquisa
+              placeholder="Pesquisar aluno por nome, matrícula ou turma..."
+              onSearch={handleSearch}
+            />
 
             <Button
               className={style.botaoAdicionar}
@@ -107,7 +133,7 @@ export default function AreaProfessor() {
 
             <Tabela
               colunas={colunasProfessor}
-              dados={dadosProfessor}
+              dados={dadosFiltrados}
             />
 
           </div>
