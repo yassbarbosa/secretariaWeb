@@ -1,14 +1,14 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import styles from "../AddUserModal/AddUserModal.module.css";
-import { addUsuario } from "../../services/adminService";
+import { addUsuario, updateUsuario } from "../../services/adminService";
 
-export default function AddProfModal({ onClose, onSuccess }) {
+export default function AddProfModal({ professor, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
-    matricula: "",
-    nomeCompleto: "",
-    cpf: "",
-    email: "",
+    matricula: professor?.matricula || "",
+    nomeCompleto: professor?.nomeCompleto || "",
+    cpf: professor?.cpf || "",
+    email: professor?.email || "",
     tipoUsuario: "PROFESSOR",
   });
   const [loading, setLoading] = useState(false);

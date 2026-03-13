@@ -10,6 +10,8 @@ export default function AreaAluno() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   const [notas,setNotas] = useState([]);
   const [observacoes,setObservacoes] = useState([]);
+  const [notasFiltradas, setNotasFiltradas] = useState([]);
+  const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const colunas = [
     { label: "Matéria", key: "disciplina" },
@@ -17,6 +19,10 @@ export default function AreaAluno() {
     { label: "N2", key: "n2" },
     { label: "Média", key: "media" }
   ];
+
+  function handleSearch(valor) {
+    setTermoPesquisa(valor);
+  }
 
   useEffect(() => {
     async function carregarDados() {
@@ -41,6 +47,7 @@ export default function AreaAluno() {
 
         setObservacoes(observacoesFormatadas);
         setNotas(notasFormatadas);
+        setNotasFiltradas(notasFormatadas);
 
       } catch (error) {
         console.error(error);
@@ -50,6 +57,21 @@ export default function AreaAluno() {
     carregarDados();
 
   }, []);
+
+  useEffect(() => {
+    if (!termoPesquisa.trim()) {
+      setNotasFiltradas(notas);
+      return;
+    }
+
+    const termo = termoPesquisa.toLowerCase();
+    const filtradas = notas.filter((nota) =>
+      String(nota.disciplina).toLowerCase().includes(termo)
+    );
+
+    setNotasFiltradas(filtradas);
+
+  }, [termoPesquisa, notas]);
 
   return (
     <div className={style.principal}>
@@ -66,12 +88,15 @@ export default function AreaAluno() {
         <div className={style.backgroundTabela}>
 
           <div className={style.topoTabela}>
-            <BarraPesquisa placeholder="Pesquisar matéria..." />
+            <BarraPesquisa
+              placeholder="Pesquisar matéria..."
+              onSearch={handleSearch}
+            />
           </div>
 
           <div className={style.titulo}>
             <h1>Notas</h1>
-            <Tabela colunas={colunas} dados={notas} />
+            <Tabela colunas={colunas} dados={notasFiltradas} />
           </div>
 
         </div>

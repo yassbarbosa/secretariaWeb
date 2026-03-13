@@ -8,6 +8,7 @@ import AddTurmaModal from "../../components/AddTurmaModal/AddTurmaModal";
 import { getTurmas } from "../../services/adminService";
 
 export default function AreaTurma() {
+  const [turmaSelecionada, setTurmaSelecionada] = useState(null);
   const [dados, setDados] = useState([]);
   const [dadosFiltrados, setDadosFiltrados] = useState([]);
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -57,11 +58,16 @@ export default function AreaTurma() {
   async function buscarTurmas() {
     try {
       const data = await getTurmas();
-      const formatado = data.map((turma, index) => ({
-        id: index + 1,
+      const formatado = data.map((turma) => ({
+        id: turma.id, 
         turma: turma.turma,
         ano: anosMap[turma.anoEscolar] || turma.anoEscolar,
-        acoes: "Editar"
+        anoEscolar: turma.anoEscolar,
+        acoes: (
+          <Button onClick={() => abrirModal(turma)}>
+            Editar
+          </Button>
+        )
       }));
       setDados(formatado);
       setDadosFiltrados(formatado);
@@ -74,7 +80,8 @@ export default function AreaTurma() {
     setTermoPesquisa(valor);
   }
 
-  function abrirModal() {
+  function abrirModal(turma = null) {
+    setTurmaSelecionada(turma);
     setModalAberto(true);
   }
 
@@ -97,6 +104,7 @@ export default function AreaTurma() {
 
       {modalAberto && (
         <AddTurmaModal 
+          turma={turmaSelecionada}
           onClose={fecharModal}
           onSuccess={buscarTurmas}
         />

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import styles from "../AddUserModal/AddUserModal.module.css";
-import { addDisciplina } from "../../services/adminService";
+import { addDisciplina, updateDisciplina } from "../../services/adminService";
 
-export default function AddMateriaModal({ onClose, onSuccess }) {
-  const [disciplina, setDisciplina] = useState("");
+export default function AddMateriaModal({ materia, onClose, onSuccess }) {
+  const [disciplina, setDisciplina] = useState(materia?.nomeDisciplina || "");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -14,16 +14,26 @@ export default function AddMateriaModal({ onClose, onSuccess }) {
       alert("Preencha o nome da matéria.");
       return;
     }
-
     setLoading(true);
     try {
-      const response = await addDisciplina(disciplina);
-      alert(response.message || "Matéria cadastrada com sucesso!");
+      let response;
+
+      if (materia) {
+        response = await updateDisciplina({
+          id: materia.id,
+          nomeDisciplina: disciplina
+        });
+      } else {
+        response = await addDisciplina(disciplina);
+      }
+
+      alert(response.message || "Operação realizada com sucesso!");
       onSuccess?.();
       onClose?.();
+
     } catch (error) {
-      console.error("Erro ao cadastrar matéria:", error);
-      alert("Erro ao cadastrar matéria. Tente novamente.");
+      console.error(error);
+      alert("Erro ao salvar matéria.");
     } finally {
       setLoading(false);
     }
@@ -35,7 +45,9 @@ export default function AddMateriaModal({ onClose, onSuccess }) {
         className={styles.modal} 
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className={styles.titulo}>Cadastrar Matéria</h2>
+        <h2 className={styles.titulo}>
+          {materia ? "Editar Matéria" : "Cadastrar Matéria"}
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>

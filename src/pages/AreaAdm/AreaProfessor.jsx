@@ -8,7 +8,7 @@ import AddProfModal from "../../components/AddProfModal/AddProfModal";
 import { getProfessores } from "../../services/adminService";
 
 export default function AreaProfessor() {
-
+  const [professorSelecionado, setProfessorSelecionado] = useState(null);
   const [dados, setDados] = useState([]);
   const [dadosFiltrados, setDadosFiltrados] = useState([]);
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -51,12 +51,28 @@ export default function AreaProfessor() {
     try {
       const data = await getProfessores();
       const formatado = data.map((prof) => ({
+        id: prof.professorId,
         registro: prof.matricula,
         nome: prof.nomeCompleto,
         disciplina: prof.nomeDisciplina,
         email: prof.email,
         ano_escolar: prof.anoEscolar,
-        acoes: "Editar"
+        acoes: (
+          <Button
+            onClick={() =>
+              abrirModal({
+                id: prof.professorId,
+                matricula: prof.matricula,
+                nomeCompleto: prof.nomeCompleto,
+                email: prof.email,
+                disciplina: prof.nomeDisciplina,
+                anoEscolar: prof.anoEscolar
+              })
+            }
+          >
+            Editar
+          </Button>
+        )
       }));
       setDados(formatado);
       setDadosFiltrados(formatado);
@@ -69,12 +85,13 @@ export default function AreaProfessor() {
     setTermoPesquisa(valor);
   }
 
-  function abrirModal() {
-    console.log("abrir modal");
+  function abrirModal(professor = null) {
+    setProfessorSelecionado(professor);
     setModalAberto(true);
   }
 
   function fecharModal() {
+    setProfessorSelecionado(null);
     setModalAberto(false);
   }
 
@@ -86,7 +103,9 @@ export default function AreaProfessor() {
           placeholder="Pesquisar professor por nome, registro, disciplina ou email..."
           onSearch={handleSearch}
         />
-        <Button onClick={abrirModal}>Adicionar Professor</Button>
+        <Button onClick={() => abrirModal()}>
+          Adicionar Professor
+        </Button>
       </div>
 
       <h1>Professores</h1>
@@ -95,11 +114,11 @@ export default function AreaProfessor() {
 
       {modalAberto && (
         <AddProfModal 
+          professor={professorSelecionado}
           onClose={fecharModal}
           onSuccess={buscarProfessores}
         />
       )}
-
     </div>
   );
 }

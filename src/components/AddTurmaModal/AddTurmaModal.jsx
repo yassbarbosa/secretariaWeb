@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import styles from "../AddUserModal/AddUserModal.module.css";
-import { addTurma } from "../../services/adminService";
+import { addTurma, updateTurma  } from "../../services/adminService";
 
-export default function AddTurmaModal({ onClose, onSuccess }) {
+export default function AddTurmaModal({ turma, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
-    turma: "",
-    anoEscolar: "ANO_1"
+    turma: turma?.turma || "",
+    anoEscolar: turma?.anoEscolar || "ANO_1"
   });
   const [loading, setLoading] = useState(false);
 
@@ -22,16 +22,29 @@ export default function AddTurmaModal({ onClose, onSuccess }) {
       alert("Preencha todos os campos obrigatórios.");
       return;
     }
-
     setLoading(true);
+
     try {
-      const response = await addTurma(formData);
-      alert(response.message || "Turma cadastrada com sucesso!");
+      let response;
+
+      if (turma) {
+        response = await updateTurma({
+          turmaId: turma.id,
+          turma: formData.turma,
+          anoEscolar: formData.anoEscolar
+        });
+
+      } else {
+        response = await addTurma(formData);
+      }
+
+      alert(response.message || "Operação realizada com sucesso!");
       onSuccess?.();
       onClose?.();
+
     } catch (error) {
-      console.error("Erro ao cadastrar turma:", error);
-      alert("Erro ao cadastrar turma. Tente novamente.");
+      console.error(error);
+      alert("Erro ao salvar turma.");
     } finally {
       setLoading(false);
     }
@@ -49,7 +62,9 @@ export default function AddTurmaModal({ onClose, onSuccess }) {
         className={styles.modal} 
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className={styles.titulo}>Cadastrar Turma</h2>
+        <h2 className={styles.titulo}>
+          {turma ? "Editar Turma" : "Cadastrar Turma"}
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>

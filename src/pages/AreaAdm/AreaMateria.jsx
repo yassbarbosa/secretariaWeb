@@ -8,6 +8,7 @@ import AddMateriaModal from "../../components/AddMateriaModal/AddMateriaModal";
 import { getDisciplinas } from "../../services/adminService";
 
 export default function AreaMateria() {
+  const [materiaSelecionada, setMateriaSelecionada] = useState(null);
   const [dados, setDados] = useState([]);
   const [dadosFiltrados, setDadosFiltrados] = useState([]);
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -43,7 +44,11 @@ export default function AreaMateria() {
       const formatado = data.map((disciplina) => ({
         id: disciplina.id,
         materia: disciplina.nomeDisciplina,
-        acoes: "Editar"
+        acoes: (
+          <Button onClick={() => abrirModal(disciplina)}>
+            Editar
+          </Button>
+        )
       }));
       setDados(formatado);
       setDadosFiltrados(formatado);
@@ -56,7 +61,8 @@ export default function AreaMateria() {
     setTermoPesquisa(valor);
   }
 
-  function abrirModal() {
+  function abrirModal(materia = null) {
+    setMateriaSelecionada(materia);
     setModalAberto(true);
   }
 
@@ -79,6 +85,7 @@ export default function AreaMateria() {
 
       {modalAberto && (
         <AddMateriaModal 
+          materia={materiaSelecionada}
           onClose={fecharModal}
           onSuccess={buscarDisciplinas}
         />
