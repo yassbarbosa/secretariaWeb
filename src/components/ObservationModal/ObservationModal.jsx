@@ -3,8 +3,7 @@ import Button from "../Button/Button";
 import styles from "./ObservationModal.module.css";
 import SelectField from "../SelectField/SelectField";
 
-export default function ObservationModal({ idProfessor }) {
-
+export default function ObservationModal({ idProfessor, onSubmit, reloadObservacoes }){
   const [alunos, setAlunos] = useState([]);
   const [idAluno, setIdAluno] = useState("");
   const [observacao, setObservacao] = useState("");
@@ -14,6 +13,7 @@ export default function ObservationModal({ idProfessor }) {
     buscarAlunos();
   }, []);
 
+  
   const buscarAlunos = async () => {
     try {
 
@@ -22,6 +22,8 @@ export default function ObservationModal({ idProfessor }) {
       );
 
       const data = await response.json();
+      
+      console.log("Resposta da API:", data);
 
       setAlunos(data);
 
@@ -70,6 +72,13 @@ export default function ObservationModal({ idProfessor }) {
     } finally {
       setLoading(false);
     }
+    if (reloadObservacoes) {
+      reloadObservacoes();
+    }
+
+    if (onSubmit) {
+      onSubmit();
+    }
   };
 
   return (
@@ -80,7 +89,7 @@ export default function ObservationModal({ idProfessor }) {
       <div className={styles.selectContainer}>
         <label className={styles.label}>Aluno</label>
 
-        <SelectField
+        <select
           className={styles.select}
           value={idAluno}
           onChange={(e) => setIdAluno(e.target.value)}
@@ -93,7 +102,7 @@ export default function ObservationModal({ idProfessor }) {
             </option>
           ))}
 
-        </SelectField>
+        </select>
       </div>
 
       <div className={styles.textAreaContainer}>
